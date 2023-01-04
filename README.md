@@ -15,4 +15,4 @@ pip install datacompy-report
 2.  Instantiate a new `datacompy_report.DatacompyReport` object
 3.  Create Report:
     - Excel format
-    - Streamlit Dashboard
+    - more to come…
