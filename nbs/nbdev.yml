@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "datacompy-report"
+  site-url: "https://nagol.github.io/datacompy_report"
+  description: "Create reports allowing for comparing two DataFrames."
+  repo-branch: main
+  repo-url: "https://github.com/nagol/datacompy_report"
