@@ -181,7 +181,7 @@ def prepare_compare_results(self:DatacompyReport) -> 'pandas.DataFrame':
 @patch
 def create_excel_report(
     self:DatacompyReport, 
-    write_file: str # file where you want the Excel file to be created
+    write_file: str # full path + filename where the Excel file is to be created
     ) -> None: 
     
     """Create Excel workbook with nicely formatted output comparing two DataFrames
