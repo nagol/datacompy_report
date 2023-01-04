@@ -7,6 +7,7 @@ __all__ = ['DatacompyReport']
 import pandas
 from fastcore.utils import *
 
+# %% ../nbs/00_datacompy_report.ipynb 4
 class DatacompyReport():
     """A class to modify the output of a datacompy instance and add reporting functionality"""
     
@@ -109,7 +110,7 @@ class DatacompyReport():
             self._autosize_excel_columns(writer.sheets[sheet_name], df)
                 
 
-# %% ../nbs/00_datacompy_report.ipynb 4
+# %% ../nbs/00_datacompy_report.ipynb 5
 @patch
 def prepare_compare_results(self:DatacompyReport) -> 'pandas.DataFrame':
     
@@ -174,7 +175,7 @@ def prepare_compare_results(self:DatacompyReport) -> 'pandas.DataFrame':
 
     return difference_intersection
 
-# %% ../nbs/00_datacompy_report.ipynb 5
+# %% ../nbs/00_datacompy_report.ipynb 6
 @patch
 def create_excel_report(self:DatacompyReport, 
                         write_file: str) -> None: # file where you want the Excel file to be created
