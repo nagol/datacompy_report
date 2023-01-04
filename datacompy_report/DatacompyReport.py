@@ -181,7 +181,8 @@ def prepare_compare_results(self:DatacompyReport) -> 'pandas.DataFrame':
 @patch
 def create_excel_report(
     self:DatacompyReport, 
-    write_file: str # full path + filename where the Excel file is to be created
+    write_file: str, # full path + filename where the Excel file is to be created
+    use_names_in_headers: bool=True # if True, replaces df1 and df2 with Comapre.df1_name, Comapre.df2_name
     ) -> None: 
     
     """Create Excel workbook with nicely formatted output comparing two DataFrames
@@ -201,6 +202,9 @@ def create_excel_report(
 
     column_stats_summary = pandas.DataFrame(self.compare_instance.column_stats).set_index('column')
     matched_compare = self.prepare_compare_results()
+    if use_names_in_headers:
+        matched_compare.columns = matched_compare.columns.str.replace('_df1$', f'_{self.compare_instance.df1_name.lower()}', regex=True)
+        matched_compare.columns = matched_compare.columns.str.replace('_df2$', f'_{self.compare_instance.df2_name.lower()}', regex=True)
 
     try:
         with pandas.ExcelWriter(write_file, engine='xlsxwriter') as writer: 
