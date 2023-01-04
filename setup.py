@@ -1,7 +1,6 @@
 from pkg_resources import parse_version
 from configparser import ConfigParser
 import setuptools
-import pandas
 import datacompy
 import fastcore.utils
 assert parse_version(setuptools.__version__)>=parse_version('36.2')

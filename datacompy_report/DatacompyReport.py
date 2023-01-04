@@ -111,7 +111,7 @@ class DatacompyReport():
 
 # %% ../nbs/00_datacompy_report.ipynb 4
 @patch
-def prepare_compare_results(self:DatacompyReport) -> 'pd.DataFrame':
+def prepare_compare_results(self:DatacompyReport) -> 'pandas.DataFrame':
     
     """Reformats the Datacompy output to display all column differences found
     for matches between the two DataFrames based on the keys compare.join_columns
@@ -123,14 +123,14 @@ def prepare_compare_results(self:DatacompyReport) -> 'pd.DataFrame':
 
     Returns
     -------
-    pd.DataFrame
+    pandas.DataFrame
         A DataFrame containing all records found in both tables where there
         was at least one difference found in a non-key column. Further, columns
         where the two DataFrames match are blanked out to make visual inspection
         of the differences stand out.
     """
 
-    def _blank_matches(row: 'pd.DataFrame', col: str) -> 'pd.DataFrame':
+    def _blank_matches(row: 'pd.DataFrame', col: str) -> 'pandas.DataFrame':
         """To reduce visual clutter, blank out entries where dataframes match.
             Meant to be applied across the rows of a difference_intersection DataFrame
             for a specific column at a time. This is just a helper function for .apply

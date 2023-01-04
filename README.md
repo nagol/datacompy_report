@@ -9,15 +9,13 @@ documentation.
 ## Install
 
 ``` sh
-pip install datacompy_report
+pip install datacompy-report
 ```
 
 ## How to use
 
-Fill me in please! Don’t forget code examples:
-
-``` python
-1+1
-```
-
-    2
+1.  Create ‘datacompy.core.Compare’ object
+2.  Instantiate a new `datacompy_report.DatacompyReport` object
+3.  Get Report:
+    - Excel format
+    - Streamlit Dashboard
