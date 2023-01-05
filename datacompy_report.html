@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Added reporting functionality for Datacompy">
+
+<title>datacompy-report - DatacompyReport</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="datacompy-report - DatacompyReport">
+<meta property="og:description" content="Added reporting functionality for `Datacompy`">
+<meta property="og:site-name" content="datacompy-report">
+<meta name="twitter:title" content="datacompy-report - DatacompyReport">
+<meta name="twitter:description" content="Added reporting functionality for `Datacompy`">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">datacompy-report</span>
+    </a>
+  </div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">DatacompyReport</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">datacompy_report</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./datacompy_report.html" class="sidebar-item-text sidebar-link active">DatacompyReport</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#datacompyreport" id="toc-datacompyreport" class="nav-link active" data-scroll-target="#datacompyreport">DatacompyReport</a></li>
+  <li><a href="#datacompyreport.prepare_compare_results" id="toc-datacompyreport.prepare_compare_results" class="nav-link" data-scroll-target="#datacompyreport.prepare_compare_results">DatacompyReport.prepare_compare_results</a></li>
+  <li><a href="#datacompyreport.create_excel_report" id="toc-datacompyreport.create_excel_report" class="nav-link" data-scroll-target="#datacompyreport.create_excel_report">DatacompyReport.create_excel_report</a></li>
+  <li><a href="#create-test-data" id="toc-create-test-data" class="nav-link" data-scroll-target="#create-test-data">Create Test Data</a>
+  <ul class="collapse">
+  <li><a href="#create-a-datacompy-compare-instance-to-compare-df1-and-df2" id="toc-create-a-datacompy-compare-instance-to-compare-df1-and-df2" class="nav-link" data-scroll-target="#create-a-datacompy-compare-instance-to-compare-df1-and-df2">Create a Datacompy Compare Instance to Compare <code>df1</code> and <code>df2</code></a></li>
+  <li><a href="#create-a-new-datacompyreport-instance" id="toc-create-a-new-datacompyreport-instance" class="nav-link" data-scroll-target="#create-a-new-datacompyreport-instance">Create a New DataCompyReport Instance</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/nagol/datacompy_report/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">DatacompyReport</h1>
+</div>
+
+<div>
+  <div class="description">
+    Added reporting functionality for <code>Datacompy</code>
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<hr>
+<p><a href="https://github.com/nagol/datacompy_report/blob/main/datacompy_report/DatacompyReport.py#L13" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="datacompyreport" class="level3">
+<h3 class="anchored" data-anchor-id="datacompyreport">DatacompyReport</h3>
+<blockquote class="blockquote">
+<pre><code> DatacompyReport (compare_instance)</code></pre>
+</blockquote>
+<p>A class to modify the output of a datacompy instance and add reporting functionality</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>compare_instance</td>
+<td>a datacompy.core.Compare instance</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><a href="https://github.com/nagol/datacompy_report/blob/main/datacompy_report/DatacompyReport.py#L117" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="datacompyreport.prepare_compare_results" class="level3">
+<h3 class="anchored" data-anchor-id="datacompyreport.prepare_compare_results">DatacompyReport.prepare_compare_results</h3>
+<blockquote class="blockquote">
+<pre><code> DatacompyReport.prepare_compare_results ()</code></pre>
+</blockquote>
+<p>Reformats the Datacompy output to display all column differences found for matches between the two DataFrames based on the keys compare.join_columns</p>
+<hr>
+<p><a href="https://github.com/nagol/datacompy_report/blob/main/datacompy_report/DatacompyReport.py#L182" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="datacompyreport.create_excel_report" class="level3">
+<h3 class="anchored" data-anchor-id="datacompyreport.create_excel_report">DatacompyReport.create_excel_report</h3>
+<blockquote class="blockquote">
+<pre><code> DatacompyReport.create_excel_report (write_file:str,
+                                      use_names_in_headers:bool=True)</code></pre>
+</blockquote>
+<p>Create Excel workbook with nicely formatted output comparing two DataFrames</p>
+<table class="table">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 25%">
+<col style="width: 34%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Type</strong></th>
+<th><strong>Default</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>write_file</td>
+<td>str</td>
+<td></td>
+<td>full path + filename where the Excel file is to be created</td>
+</tr>
+<tr class="even">
+<td>use_names_in_headers</td>
+<td>bool</td>
+<td>True</td>
+<td>if True, replaces df1 and df2 with Comapre.df1_name, Comapre.df2_name</td>
+</tr>
+<tr class="odd">
+<td><strong>Returns</strong></td>
+<td><strong>None</strong></td>
+<td></td>
+<td><strong>Excel workbook written at write_file location</strong></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="create-test-data" class="level1">
+<h1>Create Test Data</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>data1 <span class="op">=</span> <span class="st">"""id,col1_string,col2_string,col3_int,col4_float,col5_string</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="st">010,g1,g1-duck,1,1.0,r1</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">110,g1,g1-dog,2,2.1,r1</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="st">210,g2,g2-duck,3,3.2,r2</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="st">310,g2,g2-dog,4,4.3,r2</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="st">410,g1,g1-goat,5,5.4,r1</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="st">510,,g1-dog,6,6.5,r1</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="st">610,g2,g2-dog,7,7.6,r2</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="st">710,g2,g2-duck,8,8.7,r2</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="st">810,g1,g1-dog,9,9.8,r1</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="st">811,g1,g1-duck,10,10.9,r1</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="st">812,g1,g1-duck,11,11.0,r1"""</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>data2 <span class="op">=</span> <span class="st">"""id,col1_string,col2_string,col3_int,col4_float,col6_string</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="st">010,g1,g1-duck,1,1.0,z1</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="st">110,g2,g2-duck,2,2.1,z2</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="st">210,g2,g2-duck,4,3.3,z2</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="st">310,g1,g1-dog,3,4.5,z1</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="st">410,g1,g1-dog,5,5.9,z1</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="st">510,g1,g1-dog,6,6.5,z2</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="st">610,g2,g2-goat,7,,z2</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="st">710,g2,g2-duck,8,8.7,z1</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="st">810,g1,g1-dog,9,9.8,z1</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="st">911,g2,g2-dog,10,10.91,z2</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="st">912,g2,g2-dog,11,11.01,z2</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="st">922,g1,g1-duck,12,11.1,z2</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>df1 <span class="op">=</span> pandas.read_csv(StringIO(data1))</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> pandas.read_csv(StringIO(data2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="create-a-datacompy-compare-instance-to-compare-df1-and-df2" class="level3">
+<h3 class="anchored" data-anchor-id="create-a-datacompy-compare-instance-to-compare-df1-and-df2">Create a Datacompy Compare Instance to Compare <code>df1</code> and <code>df2</code></h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>compare <span class="op">=</span> datacompy.Compare(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    df1,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    df2,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    join_columns<span class="op">=</span>[<span class="st">'id'</span>, <span class="st">'col1_string'</span>],  <span class="co"># Key columns, can be single or list</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    abs_tol<span class="op">=</span><span class="dv">0</span>,                           <span class="co"># Optional, defaults to 0</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    rel_tol<span class="op">=</span><span class="dv">0</span>,                           <span class="co"># Optional, defaults to 0</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    df1_name<span class="op">=</span><span class="st">'Base'</span>,                     <span class="co"># Optional, defaults to 'df1'</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    df2_name<span class="op">=</span><span class="st">'Compare'</span>                   <span class="co"># Optional, defaults to 'df2'</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="create-a-new-datacompyreport-instance" class="level3">
+<h3 class="anchored" data-anchor-id="create-a-new-datacompyreport-instance">Create a New DataCompyReport Instance</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>report <span class="op">=</span> DatacompyReport(compare)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>report</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code> datacompy_report instance:
+ Comparing: Base and Compare</code></pre>
+</div>
+</div>
+<p>The <code>.compare_instance</code> attribute is the <code>datacompy.core.Compare</code> object. <code>datacompy.core.Compare</code> attributes can be accessed directly.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> <span class="bu">dir</span>(report.compare_instance):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> item[<span class="dv">0</span>] <span class="op">!=</span> <span class="st">'_'</span>:</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f'report.compare_instance.</span><span class="sc">{</span>item<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>report.compare_instance.abs_tol
+report.compare_instance.all_columns_match
+report.compare_instance.all_mismatch
+report.compare_instance.all_rows_overlap
+report.compare_instance.cast_column_names_lower
+report.compare_instance.column_stats
+report.compare_instance.count_matching_rows
+report.compare_instance.df1
+report.compare_instance.df1_name
+report.compare_instance.df1_unq_columns
+report.compare_instance.df1_unq_rows
+report.compare_instance.df2
+report.compare_instance.df2_name
+report.compare_instance.df2_unq_columns
+report.compare_instance.df2_unq_rows
+report.compare_instance.ignore_case
+report.compare_instance.ignore_spaces
+report.compare_instance.intersect_columns
+report.compare_instance.intersect_rows
+report.compare_instance.intersect_rows_match
+report.compare_instance.join_columns
+report.compare_instance.matches
+report.compare_instance.on_index
+report.compare_instance.rel_tol
+report.compare_instance.report
+report.compare_instance.sample_mismatch
+report.compare_instance.subset</code></pre>
+</div>
+</div>
+<section id="view-modified-matched-differences-report" class="level4">
+<h4 class="anchored" data-anchor-id="view-modified-matched-differences-report">View Modified Matched Differences Report</h4>
+<p><code>Datacompy</code> provides most of the methods and attributes necessary to create a very useful comparison of two DataFrames. For some particular use cases though it is helpful to represent the data where matches on <em>key</em> columns are found but at least one difference exists (by value and/or by type) in a column they both share. Further, there is no added value reporting values in columns where the two DataFrames match for this use case so matching values are blanked out.</p>
+<p>To create such a table: <code>report.prepare_compare_results()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>report.prepare_compare_results()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+      <th>col2_string_df1</th>
+      <th>col2_string_df2</th>
+      <th>col3_int_df1</th>
+      <th>col3_int_df2</th>
+      <th>col4_float_df1</th>
+      <th>col4_float_df2</th>
+    </tr>
+    <tr>
+      <th>id</th>
+      <th>col1_string</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>210</th>
+      <th>g2</th>
+      <td></td>
+      <td></td>
+      <td>3.0</td>
+      <td>4.0</td>
+      <td>3.2</td>
+      <td>3.3</td>
+    </tr>
+    <tr>
+      <th>410</th>
+      <th>g1</th>
+      <td>g1-goat</td>
+      <td>g1-dog</td>
+      <td></td>
+      <td></td>
+      <td>5.4</td>
+      <td>5.9</td>
+    </tr>
+    <tr>
+      <th>610</th>
+      <th>g2</th>
+      <td>g2-dog</td>
+      <td>g2-goat</td>
+      <td></td>
+      <td></td>
+      <td>7.6</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="create-excel-report" class="level4">
+<h4 class="anchored" data-anchor-id="create-excel-report">Create Excel Report</h4>
+<p>To create an Excel report, use <code>report.create_excel_report('comparison_report_test_data.xlsx')</code>.</p>
+<p>The workbook will contain multiple sheets:</p>
+<ul>
+<li><strong>Row Summary</strong> - overall comparison of DataFrame1 and DataFrame2 by row</li>
+<li><strong>Column Summary</strong> - overall comparison of DataFrame1 and DataFrame2 by row</li>
+<li><strong>Columns Stats Summary</strong> - overall comparison of column metadata for DataFrame1 and DataFrame2</li>
+<li><strong>DataFrame1 Observations Only</strong> - all rows (by key as defined by <code>self.compare_instance.join_columns</code>) found in DataFrame 1 but not DataFrame 2</li>
+<li><strong>DataFrame2 Observations Only</strong> - all rows (by key as defined by <code>self.compare_instance.join_columns</code>) found in DataFrame 2 but not DataFrame 1</li>
+<li><strong>Matched Differences</strong> - all rows (by key as defined by <code>self.compare_instance.join_columns</code>) found in both DataFrame1 and DataFrame2 having at least one difference in a non-key field. The Matched Differences DataFrame replaces all fields where the DataFrames match with blanks by using <code>report.prepare_compare_results()</code></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>report.create_excel_report(<span class="st">'comparison_report_test_data.xlsx'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Excel Workbook has been created</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

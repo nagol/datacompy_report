@@ -1,0 +1,1 @@
+Sitemap: https://nagol.github.io/datacompy_report/sitemap.xml
